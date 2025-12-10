@@ -1,0 +1,4 @@
+- https://universe.roboflow.com/carto/road-quality-classification/browse?queryText=&pageSize=50&startingIndex=0&browseQuery=true
+  - Categoris
+  - Aphalt/Paved
+  - Good/Regular/Bad
