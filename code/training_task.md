@@ -1,0 +1,7 @@
+- Run prepare_data.py
+  - To generate augmented data in data_set/processed folder
+- in train.py
+  - Load data from process using `load_data` function
+  - it array of images, each containing path to the image, and it's category
+  - split the data into training/validation/testing (80% training, 10% validation, 10% testing)
+  - begin the first AI checkpoint (do the actual model)
