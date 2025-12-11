@@ -2,6 +2,8 @@ import os
 from dataclasses import dataclass
 from enum import StrEnum
 
+dirname = os.path.dirname(__file__)
+
 class Category(StrEnum):
     GOOD = "good"
     POOR = "poor"
@@ -22,11 +24,10 @@ def load_images(type: LoadingType) -> list[Image]:
 
     folder_path = ""
     if type == LoadingType.RAW:
-        folder_path = "../data_set/raw" 
+        folder_path = os.path.join(dirname, "../data_set/raw")
     elif type == LoadingType.PROCESSED:
-        folder_path = "../data_set/processed"
-
-    print(folder_path)
+        folder_path = os.path.join(dirname, "../data_set/processed") 
+    folder_path = os.path.abspath(folder_path) # remove ../ from path
 
     for subdir, _, files in os.walk(folder_path):
         if subdir == folder_path or subdir == "":
