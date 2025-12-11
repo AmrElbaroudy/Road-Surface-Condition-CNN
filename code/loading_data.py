@@ -41,9 +41,3 @@ def load_images(type: LoadingType) -> list[Image]:
             ))
 
     return result
-
-if __name__ == "__main__":
-    images = load_images(LoadingType.RAW)
-    print(f"Loaded {len(images)} images.")
-    for img in images[:5]:
-        print(img)
