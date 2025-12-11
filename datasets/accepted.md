@@ -1,0 +1,5 @@
+- https://www.kaggle.com/datasets/prudhvignv/road-damage-classification-and-assessment/data
+  - good
+  - poor
+  - satisfactory
+  - very_poor
