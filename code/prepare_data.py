@@ -45,7 +45,7 @@ def change_resolution(images: list[ProcessingImage], size=(224, 224)):
 
     return result
 
-def variate_brighteness_contrast(images: list[ProcessingImage]) -> list[ProcessingImage]:
+def variate_brightness_contrast(images: list[ProcessingImage]) -> list[ProcessingImage]:
     result: list[ProcessingImage] = []
 
     for img in images:
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     images = load_images(LoadingType.RAW)
     loaded_imgs = read_images(images)
     loaded_imgs = change_resolution(loaded_imgs, size=(224, 224))
-    loaded_imgs = variate_brighteness_contrast(loaded_imgs)
+    loaded_imgs = variate_brightness_contrast(loaded_imgs)
     loaded_imgs = variate_rotation(loaded_imgs)
     loaded_imgs = variate_flip(loaded_imgs)
 
