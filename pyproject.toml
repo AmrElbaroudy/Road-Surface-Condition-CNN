@@ -11,5 +11,5 @@ dependencies = [
   "opencv-python>=4.12.0.88",
   "scikit-learn>=1.8.0",
   "seaborn>=0.13.2",
-  "tensorflow>=2.20.0",
+  "tensorflow[and-cuda]>=2.20.0",
 ]
