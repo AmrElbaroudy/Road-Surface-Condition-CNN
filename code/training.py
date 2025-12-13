@@ -274,3 +274,31 @@ class RoadSurfaceClassifier:
         plots_dir.mkdir(exist_ok=True)
         plt.savefig(plots_dir / "confusion_matrix.png", dpi=300, bbox_inches="tight")
         plt.show()
+
+def main():
+    classifier = RoadSurfaceClassifier(input_shape=(224, 224, 3))
+
+    image_paths, labels = classifier.load_processed_data()
+
+    train_ds, val_ds, test_ds = classifier.split_data(
+        image_paths, labels, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1
+    )
+
+    classifier.build_model()
+    classifier.compile_model(learning_rate=0.001)
+
+    classifier.train(train_ds, val_ds, epochs=40)
+
+    classifier.plot_training_history()
+
+    y_true, y_pred = classifier.evaluate(test_ds)
+
+    classifier.plot_confusion_matrix(y_true, y_pred)
+
+    print("\n" + "=" * 42)
+    print("Training pipeline completed successfully!")
+    print("=" * 42)
+
+
+if __name__ == "__main__":
+    main()
