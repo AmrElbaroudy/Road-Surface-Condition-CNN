@@ -6,7 +6,9 @@ from pathlib import Path
 import keras
 from keras import layers, models
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from sklearn.metrics import classification_report
+import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
 
 np.random.seed(42)
 tf.random.set_seed(42)
@@ -80,7 +82,6 @@ class RoadSurfaceClassifier:
         test_ds = test_ds.batch(32).prefetch(tf.data.AUTOTUNE)
 
         return train_ds, val_ds, test_ds
-
     def build_model(self):
         self.model = models.Sequential(
             [
@@ -197,3 +198,79 @@ class RoadSurfaceClassifier:
 
         return y_true_classes, y_pred_classes
 
+    def plot_training_history(self):
+        """Plot training and validation metrics"""
+        if self.history is None:
+            print("No training history available!")
+            return
+
+        fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+        # Accuracy
+        axes[0, 0].plot(self.history.history["accuracy"], label="Train Accuracy")
+        axes[0, 0].plot(self.history.history["val_accuracy"], label="Val Accuracy")
+        axes[0, 0].set_title("Model Accuracy")
+        axes[0, 0].set_xlabel("Epoch")
+        axes[0, 0].set_ylabel("Accuracy")
+        axes[0, 0].legend()
+        axes[0, 0].grid(True)
+
+        # Loss
+        axes[0, 1].plot(self.history.history["loss"], label="Train Loss")
+        axes[0, 1].plot(self.history.history["val_loss"], label="Val Loss")
+        axes[0, 1].set_title("Model Loss")
+        axes[0, 1].set_xlabel("Epoch")
+        axes[0, 1].set_ylabel("Loss")
+        axes[0, 1].legend()
+        axes[0, 1].grid(True)
+
+        # Precision
+        axes[1, 0].plot(self.history.history["precision"], label="Train Precision")
+        axes[1, 0].plot(self.history.history["val_precision"], label="Val Precision")
+        axes[1, 0].set_title("Model Precision")
+        axes[1, 0].set_xlabel("Epoch")
+        axes[1, 0].set_ylabel("Precision")
+        axes[1, 0].legend()
+        axes[1, 0].grid(True)
+
+        # Recall
+        axes[1, 1].plot(self.history.history["recall"], label="Train Recall")
+        axes[1, 1].plot(self.history.history["val_recall"], label="Val Recall")
+        axes[1, 1].set_title("Model Recall")
+        axes[1, 1].set_xlabel("Epoch")
+        axes[1, 1].set_ylabel("Recall")
+        axes[1, 1].legend()
+        axes[1, 1].grid(True)
+
+        plt.tight_layout()
+
+        # Save plot
+        plots_dir = dirname / "../results"
+        plots_dir.mkdir(exist_ok=True)
+        plt.savefig(plots_dir / "training_history.png", dpi=300, bbox_inches="tight")
+        print(f"\nTraining history plot saved to {plots_dir / 'training_history.png'}")
+        plt.show()
+
+    def plot_confusion_matrix(self, y_true, y_pred):
+        """Plot confusion matrix"""
+        cm = confusion_matrix(y_true, y_pred)
+
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(
+            cm,
+            annot=True,
+            fmt="d",
+            cmap="Blues",
+            xticklabels=self.class_names,
+            yticklabels=self.class_names,
+        )
+        plt.title("Confusion Matrix")
+        plt.ylabel("True Label")
+        plt.xlabel("Predicted Label")
+        plt.tight_layout()
+
+        # Save plot
+        plots_dir = (dirname / "../results").resolve()
+        plots_dir.mkdir(exist_ok=True)
+        plt.savefig(plots_dir / "confusion_matrix.png", dpi=300, bbox_inches="tight")
+        plt.show()
