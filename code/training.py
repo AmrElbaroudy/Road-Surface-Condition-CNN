@@ -2,11 +2,20 @@ from loading_data import load_images, LoadingType
 import numpy as np
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
+from pathlib import Path
+import keras
+from keras import layers, models
 
 np.random.seed(42)
 tf.random.set_seed(42)
 
+dirname = Path(__file__).parent
+
 class RoadSurfaceClassifier:
+    def __init__(self, input_shape=(224, 224, 3), num_classes=None):
+        self.input_shape = input_shape
+        self.num_classes = num_classes
+
     def load_processed_data(self):
         """Load image paths efficiently without loading all images into RAM"""
         print("Loading image paths...")
@@ -70,3 +79,50 @@ class RoadSurfaceClassifier:
 
         return train_ds, val_ds, test_ds
 
+    def build_model(self):
+        self.model = models.Sequential(
+            [
+                # First convolutional block
+                layers.Conv2D(
+                    32,
+                    (3, 3),
+                    activation="relu",
+                    padding="same",
+                    input_shape=self.input_shape,
+                ),
+                layers.BatchNormalization(),
+                layers.Conv2D(32, (3, 3), activation="relu", padding="same"),
+                layers.MaxPooling2D((2, 2)),
+                layers.Dropout(0.25),
+                # Second convolutional block
+                layers.Conv2D(64, (3, 3), activation="relu", padding="same"),
+                layers.BatchNormalization(),
+                layers.Conv2D(64, (3, 3), activation="relu", padding="same"),
+                layers.MaxPooling2D((2, 2)),
+                layers.Dropout(0.25),
+                # Third convolutional block
+                layers.Conv2D(128, (3, 3), activation="relu", padding="same"),
+                layers.BatchNormalization(),
+                layers.Conv2D(128, (3, 3), activation="relu", padding="same"),
+                layers.MaxPooling2D((2, 2)),
+                layers.Dropout(0.25),
+                # Fourth convolutional block (deeper for 224x224 input)
+                layers.Conv2D(256, (3, 3), activation="relu", padding="same"),
+                layers.BatchNormalization(),
+                layers.MaxPooling2D((2, 2)),
+                layers.Dropout(0.3),
+                # Dense layers
+                layers.Flatten(),
+                layers.Dense(512, activation="relu"),
+                layers.BatchNormalization(),
+                layers.Dropout(0.5),
+                layers.Dense(256, activation="relu"),
+                layers.Dropout(0.5),
+                layers.Dense(self.num_classes, activation="softmax"),
+            ]
+        )
+
+        print("\nModel Architecture:")
+        self.model.summary()
+
+        return self.model
