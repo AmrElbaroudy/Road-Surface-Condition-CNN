@@ -1,91 +1,81 @@
 # Road-Surface-Condition-CNN
 
-## 1. project description
+This project uses a Convolutional Neural Network (CNN) to classify road surface conditions from images. The model can identify four categories: good, poor, satisfactory, and very poor.
 
-=======
+## Dataset
 
-Road surface conditions play a crucial role in driving safety, transportation efficiency, and infrastructure management. Images captured by vehicle-mounted cameras or roadside monitoring systems often contain clear visual cues that indicate surface quality such as wetness, cracks, sand, snow, or potholes.
+The dataset used for this project can be found on Kaggle:
+[Road Damage Classification and Assessment](https://www.kaggle.com/datasets/prudhvignv/road-damage-classification-and-assessment/data)
 
----
+Download the dataset and place it in a way that the scripts can access it. The raw data should be placed in `data_set/raw`.
 
-## 2. dataset link
+## Installation
 
-This dataset contains images of roads with damages.
-We classify the damages of roads into 4 categories such as good, poor, satisfactory, very poor according to their extent of damage.
+To install the required dependencies, run the following command:
 
-**Dataset Link:**
-https://www.kaggle.com/datasets/prudhvignv/road-damage-classification-and-assessment/data
+```bash
+pip install -r requirements.txt
+```
 
----
+## Usage
 
-## 3. How to Install Dependencies
+The project is divided into several scripts, each responsible for a specific part of the workflow.
 
----
+### 1. Data Preprocessing
 
-### loading_data.py
+Before training the model, you need to preprocess the raw image data. This includes resizing, augmentation (brightness, contrast, rotation, flip), and organizing the images into a processed dataset.
 
-**Purpose:**  
-This file is responsible for loading road surface images from disk and organizing them
-into structured objects that can be used for training and evaluation.
+To run the preprocessing script:
 
-**Key Components:**
+```bash
+python code/prepare_data.py
+```
 
-- **Category (Enum):**  
-  Defines the road surface classes such as `good`, `poor`, `satisfactory`,
-  and `very_poor`.
+This will take the raw images from `data_set/raw` and save the processed images in `data_set/processed`.
 
-- **Image (Dataclass):**  
-  Represents a single image with its file path and corresponding category.
+### 2. Training the Model
 
-- **LoadingType (Enum):**  
-  Specifies whether images are loaded from the raw dataset or the processed dataset.
+Once the data is preprocessed, you can train the CNN model. The training script will load the processed data, build the model, and train it. The best model will be saved.
 
-**Main Function:**
+To start the training process:
 
-`load_images(type: LoadingType)`
+```bash
+python code/training.py
+```
 
-**Process:**
+The trained model will be saved as `models/best_road_model.keras`. Training logs are saved in `logs/training.txt`, and the training history is saved in `results/training_history.csv`.
 
-- Determines the dataset directory based on the loading type
-- Extracts image paths and their categories
+### 3. Evaluating the Model
 
-**Output:**
+After training, you can evaluate the model's performance on the test set. The evaluation script will generate a classification report and a confusion matrix.
 
-- A list of `Image` objects containing image paths and labels
+To evaluate the model:
 
----
+```bash
+python code/evaluation.py
+```
 
-### prepare_data.py
+The evaluation report is saved in `logs/evaluation.txt`, and visualizations such as the accuracy and loss curves, and the confusion matrix are saved in the `results/` directory.
 
-**Purpose:**  
-This file performs image preprocessing and data augmentation to generate multiple variations of the same image.
-This help the model learn different possible conditions of the road surface and prevent overfitting, ensuring better generalization.
+### 4. Running the GUI Application
 
-**Key Components:**
+An interactive GUI application is available to classify single road surface images.
 
-- **ProcessingImage (Dataclass):**  
-  Stores the image matrix, path, and category label.
+To run the application:
 
-**Main Functions:**
+```bash
+python code/inference.py
+```
 
-- `read_images()`  
-   Reads images using OpenCV.
+This will open a window where you can select an image, and the application will display the predicted classification with probabilities for each category.
 
-- `change_resolution()`  
-  Resizes all images to a fixed size (224×224).
+## Results
 
-- `variate_brightness_contrast()`  
-  Applies random brightness and contrast variations.
+The following results and visualizations are generated during the training and evaluation process and can be found in the `results/` directory:
 
-- `variate_rotation()`  
-  Rotates images by small angles for augmentation.
-
-- `variate_flip()`  
-  Applies horizontal flipping randomly.
-
-- `save_images()`  
-  Saves processed images into class-based folders.
-
-**Output:**
-
-- Augmented and resized dataset stored in `data_set/processed`
+-   `accuracy_curve.png`: Model accuracy over epochs.
+-   `loss_curve.png`: Model loss over epochs.
+-   `confusion_matrix_visual.png`: Confusion matrix of the model's predictions.
+-   `classification_report.png`: Classification report showing precision, recall, and F1-score.
+-   `sample_predictions.png`: Example predictions on test images.
+-   `training_history.csv`: CSV file with the training history.
