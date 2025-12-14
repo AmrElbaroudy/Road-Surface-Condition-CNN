@@ -1,5 +1,4 @@
 from model import RoadSurfaceClassifier
-from visualizations import plot_training_history
 import tensorflow as tf
 from pathlib import Path
 import pandas as pd
@@ -20,7 +19,7 @@ def main():
     history_df.to_csv(history_csv_path, index=False)
     print(f"Training history saved to {history_csv_path}")
 
-    plot_training_history(history)
+    classifier.plot_training_history()
 
     _, _ = classifier.evaluate(test_ds)
 
