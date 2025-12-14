@@ -1,5 +1,2 @@
-*
-!.gitkeep
-!.gitignore
-!/raw
-!/processed
+*.jpg
+*.JPG

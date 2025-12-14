@@ -7,7 +7,7 @@ This project uses a Convolutional Neural Network (CNN) to classify road surface 
 The dataset used for this project can be found on Kaggle:
 [Road Damage Classification and Assessment](https://www.kaggle.com/datasets/prudhvignv/road-damage-classification-and-assessment/data)
 
-Download the dataset and place it in a way that the scripts can access it. The raw data should be placed in `data_set/raw`.
+Download the dataset and place it in a way that the scripts can access it. The raw data should be placed in `data_set/raw`, if you want to train the model.
 
 ## Installation
 
@@ -18,6 +18,10 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+
+Note: the pre-trained model is uploaded [here](https://drive.google.com/file/d/1Zo_j-OSVwYh45CVOuFx_lmQ_De_mFaC_/view?usp=drive_link), download it and put it in `models` folder, after that you should have `models/best_road_model.keras` file in your local clone,with 98% accuracy, you can use `code/inference.py` to test the model via GUI, they will read from `models` directory.
+The model is not committed to git because it's large (150mb)
+You can find some sample test images to test from here `sample_test_data/`
 
 The project is divided into several scripts, each responsible for a specific part of the workflow.
 
@@ -73,9 +77,9 @@ This will open a window where you can select an image, and the application will 
 
 The following results and visualizations are generated during the training and evaluation process and can be found in the `results/` directory:
 
--   `accuracy_curve.png`: Model accuracy over epochs.
--   `loss_curve.png`: Model loss over epochs.
--   `confusion_matrix_visual.png`: Confusion matrix of the model's predictions.
--   `classification_report.png`: Classification report showing precision, recall, and F1-score.
--   `sample_predictions.png`: Example predictions on test images.
--   `training_history.csv`: CSV file with the training history.
+- `accuracy_curve.png`: Model accuracy over epochs.
+- `loss_curve.png`: Model loss over epochs.
+- `confusion_matrix_visual.png`: Confusion matrix of the model's predictions.
+- `classification_report.png`: Classification report showing precision, recall, and F1-score.
+- `sample_predictions.png`: Example predictions on test images.
+- `training_history.csv`: CSV file with the training history.
