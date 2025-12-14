@@ -1,0 +1,296 @@
+2025-12-14 13:44:58.178043: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Loading datasets...
+Found 15238 images for train split.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1765712700.762815   63616 gpu_device.cc:2020] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 4863 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 3070 Laptop GPU, pci bus id: 0000:01:00.0, compute capability: 8.6
+Found 208 images for val split.
+Found 208 images for test split.
+
+Classes: ['good', 'poor', 'very_poor']
+/home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/.venv/lib/python3.12/site-packages/keras/src/layers/convolutional/base_conv.py:113: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+Model Architecture:
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                      │ (None, 224, 224, 32)        │             896 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization                  │ (None, 224, 224, 32)        │             128 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_1 (Conv2D)                    │ (None, 224, 224, 32)        │           9,248 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d (MaxPooling2D)         │ (None, 112, 112, 32)        │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 112, 112, 32)        │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_2 (Conv2D)                    │ (None, 112, 112, 64)        │          18,496 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_1                │ (None, 112, 112, 64)        │             256 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_3 (Conv2D)                    │ (None, 112, 112, 64)        │          36,928 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d_1 (MaxPooling2D)       │ (None, 56, 56, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_1 (Dropout)                  │ (None, 56, 56, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_4 (Conv2D)                    │ (None, 56, 56, 128)         │          73,856 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_2                │ (None, 56, 56, 128)         │             512 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_5 (Conv2D)                    │ (None, 56, 56, 128)         │         147,584 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d_2 (MaxPooling2D)       │ (None, 28, 28, 128)         │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_2 (Dropout)                  │ (None, 28, 28, 128)         │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_6 (Conv2D)                    │ (None, 28, 28, 256)         │         295,168 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_3                │ (None, 28, 28, 256)         │           1,024 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d_3 (MaxPooling2D)       │ (None, 14, 14, 256)         │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_3 (Dropout)                  │ (None, 14, 14, 256)         │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 50176)               │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense (Dense)                        │ (None, 256)                 │      12,845,312 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ batch_normalization_4                │ (None, 256)                 │           1,024 │
+│ (BatchNormalization)                 │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_4 (Dropout)                  │ (None, 256)                 │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 128)                 │          32,896 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_5 (Dropout)                  │ (None, 128)                 │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_2 (Dense)                      │ (None, 3)                   │             387 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 13,463,715 (51.36 MB)
+ Trainable params: 13,462,243 (51.35 MB)
+ Non-trainable params: 1,472 (5.75 KB)
+
+Model compiled successfully!
+
+Starting training for 40 epochs...
+Epoch 1/40
+2025-12-14 13:45:04.362248: I external/local_xla/xla/service/service.cc:163] XLA service 0x7f64ec003900 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2025-12-14 13:45:04.362275: I external/local_xla/xla/service/service.cc:171]   StreamExecutor device (0): NVIDIA GeForce RTX 3070 Laptop GPU, Compute Capability 8.6
+2025-12-14 13:45:04.430229: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2025-12-14 13:45:04.877727: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:473] Loaded cuDNN version 91700
+2025-12-14 13:45:05.213059: I external/local_xla/xla/service/gpu/autotuning/dot_search_space.cc:208] All configs were filtered out because none of them sufficiently match the hints. Maybe the hints set does not contain a good representative set of valid configs? Working around this by using the full hints set instead.
+2025-12-14 13:45:05.213111: I external/local_xla/xla/service/gpu/autotuning/dot_search_space.cc:208] All configs were filtered out because none of them sufficiently match the hints. Maybe the hints set does not contain a good representative set of valid configs? Working around this by using the full hints set instead.
+2025-12-14 13:45:05.213163: I external/local_xla/xla/service/gpu/autotuning/dot_search_space.cc:208] All configs were filtered out because none of them sufficiently match the hints. Maybe the hints set does not contain a good representative set of valid configs? Working around this by using the full hints set instead.
+2025-12-14 13:45:05.213175: I external/local_xla/xla/service/gpu/autotuning/dot_search_space.cc:208] All configs were filtered out because none of them sufficiently match the hints. Maybe the hints set does not contain a good representative set of valid configs? Working around this by using the full hints set instead.
+2025-12-14 13:45:05.620991: I external/local_xla/xla/stream_executor/cuda/subprocess_compilation.cc:346] ptxas warning : Registers are spilled to local memory in function 'gemm_fusion_dot_3558', 16 bytes spill stores, 16 bytes spill loads
+
+2025-12-14 13:45:06.897388: I external/local_xla/xla/stream_executor/cuda/subprocess_compilation.cc:346] ptxas warning : Registers are spilled to local memory in function 'gemm_fusion_dot_4684', 520 bytes spill stores, 520 bytes spill loads
+
+2025-12-14 13:45:07.218244: I external/local_xla/xla/stream_executor/cuda/subprocess_compilation.cc:346] ptxas warning : Registers are spilled to local memory in function 'gemm_fusion_dot_4667', 520 bytes spill stores, 520 bytes spill loads
+
+I0000 00:00:1765712720.956416   63702 device_compiler.h:196] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.9206 - loss: 0.2660 - precision: 0.9262 - recall: 0.91362025-12-14 13:46:06.535895: I external/local_xla/xla/stream_executor/cuda/subprocess_compilation.cc:346] ptxas warning : Registers are spilled to local memory in function 'input_reduce_select_fusion_3', 248 bytes spill stores, 248 bytes spill loads
+
+477/477 ━━━━━━━━━━━━━━━━━━━━ 0s 96ms/step - accuracy: 0.9207 - loss: 0.2659 - precision: 0.9263 - recall: 0.9136
+Epoch 1: val_accuracy improved from None to 0.43269, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 70s 108ms/step - accuracy: 0.9480 - loss: 0.2188 - precision: 0.9507 - recall: 0.9446 - val_accuracy: 0.4327 - val_loss: 8.6561 - val_precision: 0.4327 - val_recall: 0.4327 - learning_rate: 0.0010
+Epoch 2/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8402 - loss: 1.0993 - precision: 0.8449 - recall: 0.8340
+Epoch 2: val_accuracy improved from 0.43269 to 0.51442, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9190 - loss: 0.4344 - precision: 0.9246 - recall: 0.9117 - val_accuracy: 0.5144 - val_loss: 8.0184 - val_precision: 0.5144 - val_recall: 0.5144 - learning_rate: 0.0010
+Epoch 3/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8351 - loss: 0.8857 - precision: 0.8439 - recall: 0.8205
+Epoch 3: val_accuracy improved from 0.51442 to 0.53846, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 77ms/step - accuracy: 0.9167 - loss: 0.3758 - precision: 0.9268 - recall: 0.9034 - val_accuracy: 0.5385 - val_loss: 2.9823 - val_precision: 0.5385 - val_recall: 0.5385 - learning_rate: 0.0010
+Epoch 4/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8242 - loss: 0.8459 - precision: 0.8367 - recall: 0.8067
+Epoch 4: val_accuracy did not improve from 0.53846
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9133 - loss: 0.3752 - precision: 0.9269 - recall: 0.8970 - val_accuracy: 0.5240 - val_loss: 2.6365 - val_precision: 0.5240 - val_recall: 0.5240 - learning_rate: 0.0010
+Epoch 5/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8011 - loss: 0.8003 - precision: 0.8206 - recall: 0.7702
+Epoch 5: val_accuracy improved from 0.53846 to 0.61058, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 76ms/step - accuracy: 0.9026 - loss: 0.3714 - precision: 0.9204 - recall: 0.8777 - val_accuracy: 0.6106 - val_loss: 1.8606 - val_precision: 0.6087 - val_recall: 0.6058 - learning_rate: 0.0010
+Epoch 6/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.7684 - loss: 0.7186 - precision: 0.8163 - recall: 0.7123
+Epoch 6: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.8869 - loss: 0.3755 - precision: 0.9201 - recall: 0.8502 - val_accuracy: 0.5625 - val_loss: 1.8792 - val_precision: 0.5652 - val_recall: 0.5625 - learning_rate: 0.0010
+Epoch 7/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 78ms/step - accuracy: 0.7896 - loss: 0.5817 - precision: 0.8353 - recall: 0.7500
+Epoch 7: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 78ms/step - accuracy: 0.9035 - loss: 0.3026 - precision: 0.9313 - recall: 0.8766 - val_accuracy: 0.5962 - val_loss: 1.4125 - val_precision: 0.5990 - val_recall: 0.5962 - learning_rate: 0.0010
+Epoch 8/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.7842 - loss: 0.5431 - precision: 0.8292 - recall: 0.7349
+Epoch 8: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9044 - loss: 0.2855 - precision: 0.9308 - recall: 0.8775 - val_accuracy: 0.5577 - val_loss: 1.8267 - val_precision: 0.5583 - val_recall: 0.5529 - learning_rate: 0.0010
+Epoch 9/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.8277 - loss: 0.5257 - precision: 0.8516 - recall: 0.7997
+Epoch 9: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9143 - loss: 0.2912 - precision: 0.9340 - recall: 0.8928 - val_accuracy: 0.4375 - val_loss: 6.1631 - val_precision: 0.4375 - val_recall: 0.4375 - learning_rate: 0.0010
+Epoch 10/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.7967 - loss: 0.8343 - precision: 0.8226 - recall: 0.7336
+Epoch 10: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.8935 - loss: 0.4125 - precision: 0.9224 - recall: 0.8414 - val_accuracy: 0.4471 - val_loss: 5.8690 - val_precision: 0.4488 - val_recall: 0.4423 - learning_rate: 0.0010
+Epoch 11/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.7557 - loss: 0.9709 - precision: 0.7766 - recall: 0.7043
+Epoch 11: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.8813 - loss: 0.4617 - precision: 0.9049 - recall: 0.8164 - val_accuracy: 0.4087 - val_loss: 2.4239 - val_precision: 0.4179 - val_recall: 0.4038 - learning_rate: 0.0010
+Epoch 12/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.7471 - loss: 0.9561 - precision: 0.7691 - recall: 0.7034
+Epoch 12: val_accuracy did not improve from 0.61058
+
+Epoch 12: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.8818 - loss: 0.4696 - precision: 0.9005 - recall: 0.8262 - val_accuracy: 0.4471 - val_loss: 3.2457 - val_precision: 0.4550 - val_recall: 0.4375 - learning_rate: 0.0010
+Epoch 13/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.5845 - loss: 1.3921 - precision: 0.6151 - recall: 0.5343
+Epoch 13: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.7941 - loss: 0.7117 - precision: 0.8258 - recall: 0.7298 - val_accuracy: 0.4615 - val_loss: 1.9680 - val_precision: 0.4724 - val_recall: 0.4519 - learning_rate: 5.0000e-04
+Epoch 14/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.6132 - loss: 0.9012 - precision: 0.6549 - recall: 0.5571
+Epoch 14: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.8143 - loss: 0.5221 - precision: 0.8519 - recall: 0.7620 - val_accuracy: 0.4904 - val_loss: 1.8003 - val_precision: 0.4976 - val_recall: 0.4904 - learning_rate: 5.0000e-04
+Epoch 15/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.6981 - loss: 0.7712 - precision: 0.7284 - recall: 0.6433
+Epoch 15: val_accuracy did not improve from 0.61058
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.8639 - loss: 0.4095 - precision: 0.8907 - recall: 0.8277 - val_accuracy: 0.5817 - val_loss: 1.2362 - val_precision: 0.5850 - val_recall: 0.5625 - learning_rate: 5.0000e-04
+Epoch 16/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.7782 - loss: 0.5586 - precision: 0.8053 - recall: 0.7403
+Epoch 16: val_accuracy improved from 0.61058 to 0.68750, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 77ms/step - accuracy: 0.9003 - loss: 0.2986 - precision: 0.9188 - recall: 0.8781 - val_accuracy: 0.6875 - val_loss: 0.9235 - val_precision: 0.6931 - val_recall: 0.6731 - learning_rate: 5.0000e-04
+Epoch 17/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8156 - loss: 0.5134 - precision: 0.8356 - recall: 0.7854
+Epoch 17: val_accuracy did not improve from 0.68750
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9161 - loss: 0.2602 - precision: 0.9304 - recall: 0.8987 - val_accuracy: 0.6779 - val_loss: 1.1333 - val_precision: 0.6780 - val_recall: 0.6683 - learning_rate: 5.0000e-04
+Epoch 18/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8432 - loss: 0.4251 - precision: 0.8592 - recall: 0.8126
+Epoch 18: val_accuracy improved from 0.68750 to 0.77404, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9316 - loss: 0.2147 - precision: 0.9419 - recall: 0.9165 - val_accuracy: 0.7740 - val_loss: 0.6108 - val_precision: 0.7822 - val_recall: 0.7596 - learning_rate: 5.0000e-04
+Epoch 19/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.8663 - loss: 0.3816 - precision: 0.8807 - recall: 0.8479
+Epoch 19: val_accuracy did not improve from 0.77404
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9406 - loss: 0.1896 - precision: 0.9491 - recall: 0.9317 - val_accuracy: 0.7548 - val_loss: 0.6548 - val_precision: 0.7561 - val_recall: 0.7452 - learning_rate: 5.0000e-04
+Epoch 20/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8897 - loss: 0.3193 - precision: 0.8976 - recall: 0.8731
+Epoch 20: val_accuracy did not improve from 0.77404
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9485 - loss: 0.1670 - precision: 0.9543 - recall: 0.9411 - val_accuracy: 0.7163 - val_loss: 0.8653 - val_precision: 0.7171 - val_recall: 0.7067 - learning_rate: 5.0000e-04
+Epoch 21/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8979 - loss: 0.2974 - precision: 0.9098 - recall: 0.8774
+Epoch 21: val_accuracy did not improve from 0.77404
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9530 - loss: 0.1527 - precision: 0.9587 - recall: 0.9438 - val_accuracy: 0.6394 - val_loss: 1.6220 - val_precision: 0.6520 - val_recall: 0.6394 - learning_rate: 5.0000e-04
+Epoch 22/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9064 - loss: 0.2864 - precision: 0.9150 - recall: 0.8932
+Epoch 22: val_accuracy did not improve from 0.77404
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9551 - loss: 0.1510 - precision: 0.9603 - recall: 0.9501 - val_accuracy: 0.6058 - val_loss: 1.7200 - val_precision: 0.6068 - val_recall: 0.6010 - learning_rate: 5.0000e-04
+Epoch 23/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9203 - loss: 0.2413 - precision: 0.9264 - recall: 0.9094
+Epoch 23: val_accuracy improved from 0.77404 to 0.79327, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+
+Epoch 23: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9623 - loss: 0.1268 - precision: 0.9654 - recall: 0.9581 - val_accuracy: 0.7933 - val_loss: 0.6131 - val_precision: 0.7923 - val_recall: 0.7885 - learning_rate: 5.0000e-04
+Epoch 24/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.8863 - loss: 0.3644 - precision: 0.8922 - recall: 0.8767
+Epoch 24: val_accuracy improved from 0.79327 to 0.89904, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9462 - loss: 0.1770 - precision: 0.9507 - recall: 0.9411 - val_accuracy: 0.8990 - val_loss: 0.3217 - val_precision: 0.8990 - val_recall: 0.8990 - learning_rate: 2.5000e-04
+Epoch 25/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.9199 - loss: 0.2433 - precision: 0.9247 - recall: 0.9151
+Epoch 25: val_accuracy improved from 0.89904 to 0.92308, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 77ms/step - accuracy: 0.9594 - loss: 0.1356 - precision: 0.9625 - recall: 0.9558 - val_accuracy: 0.9231 - val_loss: 0.2181 - val_precision: 0.9231 - val_recall: 0.9231 - learning_rate: 2.5000e-04
+Epoch 26/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9410 - loss: 0.1849 - precision: 0.9427 - recall: 0.9354
+Epoch 26: val_accuracy did not improve from 0.92308
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9663 - loss: 0.1127 - precision: 0.9680 - recall: 0.9634 - val_accuracy: 0.9183 - val_loss: 0.2292 - val_precision: 0.9183 - val_recall: 0.9183 - learning_rate: 2.5000e-04
+Epoch 27/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9251 - loss: 0.2248 - precision: 0.9274 - recall: 0.9197
+Epoch 27: val_accuracy improved from 0.92308 to 0.92788, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9600 - loss: 0.1241 - precision: 0.9621 - recall: 0.9568 - val_accuracy: 0.9279 - val_loss: 0.2376 - val_precision: 0.9324 - val_recall: 0.9279 - learning_rate: 2.5000e-04
+Epoch 28/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9569 - loss: 0.1472 - precision: 0.9594 - recall: 0.9534
+Epoch 28: val_accuracy improved from 0.92788 to 0.96635, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 76ms/step - accuracy: 0.9690 - loss: 0.1041 - precision: 0.9704 - recall: 0.9661 - val_accuracy: 0.9663 - val_loss: 0.1177 - val_precision: 0.9662 - val_recall: 0.9615 - learning_rate: 2.5000e-04
+Epoch 29/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9534 - loss: 0.1324 - precision: 0.9554 - recall: 0.9520
+Epoch 29: val_accuracy did not improve from 0.96635
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9738 - loss: 0.0840 - precision: 0.9754 - recall: 0.9725 - val_accuracy: 0.9519 - val_loss: 0.1506 - val_precision: 0.9519 - val_recall: 0.9519 - learning_rate: 2.5000e-04
+Epoch 30/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9664 - loss: 0.0984 - precision: 0.9672 - recall: 0.9642
+Epoch 30: val_accuracy did not improve from 0.96635
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9795 - loss: 0.0671 - precision: 0.9805 - recall: 0.9777 - val_accuracy: 0.9663 - val_loss: 0.1028 - val_precision: 0.9663 - val_recall: 0.9663 - learning_rate: 2.5000e-04
+Epoch 31/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9738 - loss: 0.0885 - precision: 0.9745 - recall: 0.9729
+Epoch 31: val_accuracy improved from 0.96635 to 0.97596, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9824 - loss: 0.0586 - precision: 0.9832 - recall: 0.9812 - val_accuracy: 0.9760 - val_loss: 0.1047 - val_precision: 0.9760 - val_recall: 0.9760 - learning_rate: 2.5000e-04
+Epoch 32/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9802 - loss: 0.0678 - precision: 0.9815 - recall: 0.9788
+Epoch 32: val_accuracy did not improve from 0.97596
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9837 - loss: 0.0564 - precision: 0.9848 - recall: 0.9827 - val_accuracy: 0.9663 - val_loss: 0.1401 - val_precision: 0.9663 - val_recall: 0.9663 - learning_rate: 2.5000e-04
+Epoch 33/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9827 - loss: 0.0658 - precision: 0.9833 - recall: 0.9817
+Epoch 33: val_accuracy did not improve from 0.97596
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9848 - loss: 0.0553 - precision: 0.9852 - recall: 0.9840 - val_accuracy: 0.9712 - val_loss: 0.1066 - val_precision: 0.9712 - val_recall: 0.9712 - learning_rate: 2.5000e-04
+Epoch 34/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9814 - loss: 0.0573 - precision: 0.9825 - recall: 0.9806
+Epoch 34: val_accuracy did not improve from 0.97596
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9840 - loss: 0.0511 - precision: 0.9847 - recall: 0.9831 - val_accuracy: 0.8894 - val_loss: 0.4085 - val_precision: 0.8889 - val_recall: 0.8846 - learning_rate: 2.5000e-04
+Epoch 35/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9812 - loss: 0.0612 - precision: 0.9817 - recall: 0.9794
+Epoch 35: val_accuracy did not improve from 0.97596
+
+Epoch 35: ReduceLROnPlateau reducing learning rate to 0.0001250000059371814.
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9854 - loss: 0.0477 - precision: 0.9859 - recall: 0.9846 - val_accuracy: 0.9663 - val_loss: 0.1307 - val_precision: 0.9663 - val_recall: 0.9663 - learning_rate: 2.5000e-04
+Epoch 36/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9716 - loss: 0.0891 - precision: 0.9726 - recall: 0.9708
+Epoch 36: val_accuracy improved from 0.97596 to 0.98558, saving model to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../models/best_road_model.keras
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 76ms/step - accuracy: 0.9805 - loss: 0.0611 - precision: 0.9817 - recall: 0.9798 - val_accuracy: 0.9856 - val_loss: 0.0742 - val_precision: 0.9856 - val_recall: 0.9856 - learning_rate: 1.2500e-04
+Epoch 37/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9884 - loss: 0.0451 - precision: 0.9890 - recall: 0.9879
+Epoch 37: val_accuracy did not improve from 0.98558
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9882 - loss: 0.0423 - precision: 0.9890 - recall: 0.9875 - val_accuracy: 0.9808 - val_loss: 0.0671 - val_precision: 0.9808 - val_recall: 0.9808 - learning_rate: 1.2500e-04
+Epoch 38/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 77ms/step - accuracy: 0.9909 - loss: 0.0327 - precision: 0.9912 - recall: 0.9906
+Epoch 38: val_accuracy did not improve from 0.98558
+477/477 ━━━━━━━━━━━━━━━━━━━━ 37s 77ms/step - accuracy: 0.9905 - loss: 0.0344 - precision: 0.9909 - recall: 0.9898 - val_accuracy: 0.9808 - val_loss: 0.0859 - val_precision: 0.9808 - val_recall: 0.9808 - learning_rate: 1.2500e-04
+Epoch 39/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - accuracy: 0.9909 - loss: 0.0329 - precision: 0.9913 - recall: 0.9907
+Epoch 39: val_accuracy did not improve from 0.98558
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 75ms/step - accuracy: 0.9896 - loss: 0.0353 - precision: 0.9901 - recall: 0.9892 - val_accuracy: 0.9808 - val_loss: 0.0681 - val_precision: 0.9808 - val_recall: 0.9808 - learning_rate: 1.2500e-04
+Epoch 40/40
+476/477 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - accuracy: 0.9911 - loss: 0.0309 - precision: 0.9915 - recall: 0.9905
+Epoch 40: val_accuracy did not improve from 0.98558
+477/477 ━━━━━━━━━━━━━━━━━━━━ 36s 76ms/step - accuracy: 0.9905 - loss: 0.0311 - precision: 0.9909 - recall: 0.9902 - val_accuracy: 0.9712 - val_loss: 0.0946 - val_precision: 0.9712 - val_recall: 0.9712 - learning_rate: 1.2500e-04
+Restoring model weights from the end of the best epoch: 37.
+
+Training completed!
+Training history saved to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/results/training_history.csv
+
+Training history plot saved to /home/joetifa/projects/college/c417/Road-Surface-Condition-CNN/code/../results/training_history.png
+
+Evaluating on test set...
+7/7 ━━━━━━━━━━━━━━━━━━━━ 0s 23ms/step - accuracy: 0.9808 - loss: 0.0785 - precision: 0.9808 - recall: 0.9808
+Test Accuracy: 0.9808
+Test Precision: 0.9808
+Test Recall: 0.9808
+Test Loss: 0.0785
+7/7 ━━━━━━━━━━━━━━━━━━━━ 1s 119ms/step
+2025-12-14 14:09:48.030594: I tensorflow/core/framework/local_rendezvous.cc:407] Local rendezvous is aborting with status: OUT_OF_RANGE: End of sequence
+
+Classification Report:
+              precision    recall  f1-score   support
+
+        good       1.00      0.99      0.99        85
+        poor       0.98      0.99      0.98        91
+   very_poor       0.94      0.94      0.94        32
+
+    accuracy                           0.98       208
+   macro avg       0.97      0.97      0.97       208
+weighted avg       0.98      0.98      0.98       208
+
+
+==========================================
+Training pipeline completed successfully!
+==========================================
