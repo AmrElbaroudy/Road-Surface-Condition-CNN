@@ -1,69 +1,51 @@
-# Road-Surface-Condition-CNN
+# Road Surface Condition CNN
 
-This project uses a Convolutional Neural Network (CNN) to classify road surface conditions from images. The model can identify four categories: good, poor, satisfactory, and very poor.
+A deep learning model to classify road surface conditions from images into four categories: `Good`, `Poor`, and `Very Poor`.
 
-## Dataset
+## Table of Contents
 
-The dataset used for this project can be found on Kaggle:
-[Road Damage Classification and Assessment](https://www.kaggle.com/datasets/prudhvignv/road-damage-classification-and-assessment/data)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Training a New Model](#training-a-new-model)
+- [Results](#results)
+- [Report](#report)
 
-Download the dataset and place it in a way that the scripts can access it. The raw data should be placed in `data_set/raw`, if you want to train the model.
+## Getting Started
 
-## Installation
+This guide will help you get the project up and running using the pre-trained model.
 
-To install the required dependencies, run the following command:
+### Prerequisites
 
-```bash
-pip install -r requirements.txt
-```
+- Python 3.12+
+- `pip`
 
-## Usage
+### Installation
 
-Note: the pre-trained model is uploaded [here](https://drive.google.com/file/d/1Zo_j-OSVwYh45CVOuFx_lmQ_De_mFaC_/view?usp=drive_link), download it and put it in `models` folder, after that you should have `models/best_road_model.keras` file in your local clone,with 98% accuracy, you can use `code/inference.py` to test the model via GUI, they will read from `models` directory.
-The model is not committed to git because it's large (150mb)
-You can find some sample test images to test from here `sample_test_data/`
+1.  Clone the repository:
 
-The project is divided into several scripts, each responsible for a specific part of the workflow.
+    ```bash
+    git clone https://github.com/your-username/Road-Surface-Condition-CNN.git
+    cd Road-Surface-Condition-CNN
+    ```
 
-### 1. Data Preprocessing
+2.  Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Before training the model, you need to preprocess the raw image data. This includes resizing, augmentation (brightness, contrast, rotation, flip), and organizing the images into a processed dataset.
+### Download the Pre-trained Model
 
-To run the preprocessing script:
+The pre-trained model is available on Google Drive.
 
-```bash
-python code/prepare_data.py
-```
+1.  **[Download the model](https://drive.google.com/file/d/1Zo_j-OSVwYh45CVOuFx_lmQ_De_mFaC_/view?usp=drive_link)** (98% accuracy).
+2.  Create a `models/` directory in the project root.
+3.  Place the downloaded file in the `models/` directory, ensuring the path is `models/best_road_model.keras`.
 
-This will take the raw images from `data_set/raw` and save the processed images in `data_set/processed`.
+> **Note:** The model is not included in the git repository due to its large size (150MB).
 
-### 2. Training the Model
+### Run the GUI Application
 
-Once the data is preprocessed, you can train the CNN model. The training script will load the processed data, build the model, and train it. The best model will be saved.
-
-To start the training process:
-
-```bash
-python code/training.py
-```
-
-The trained model will be saved as `models/best_road_model.keras`. Training logs are saved in `logs/training.txt`, and the training history is saved in `results/training_history.csv`.
-
-### 3. Evaluating the Model
-
-After training, you can evaluate the model's performance on the test set. The evaluation script will generate a classification report and a confusion matrix.
-
-To evaluate the model:
-
-```bash
-python code/evaluation.py
-```
-
-The evaluation report is saved in `logs/evaluation.txt`, and visualizations such as the accuracy and loss curves, and the confusion matrix are saved in the `results/` directory.
-
-### 4. Running the GUI Application
-
-An interactive GUI application is available to classify single road surface images.
+You can use the GUI application to classify road images. Sample images are available in the `sample_test_data/` directory.
 
 To run the application:
 
@@ -71,15 +53,98 @@ To run the application:
 python code/inference.py
 ```
 
-This will open a window where you can select an image, and the application will display the predicted classification with probabilities for each category.
+This will open a window where you can select an image and see the predicted classification.
+
+## Project Structure
+
+```
+├── code/
+│   ├── __init__.py
+│   ├── evaluation.py
+│   ├── inference.py
+│   ├── loading_data.py
+│   ├── model.py
+│   ├── prepare_data.py
+│   ├── training.py
+│   └── visualizations.py
+├── data_set/
+│   ├── raw/
+│   └── splitted/
+├── models/
+│   └── best_road_model.keras  (after downloading or training a new one)
+├── results/
+├── sample_test_data/
+├── README.md
+└── requirements.txt
+```
+
+## Training a New Model
+
+If you want to train the model from scratch, follow these steps.
+
+### 1. Dataset Setup
+
+1.  Download the dataset from [Kaggle: Road Damage Classification and Assessment](https://www.kaggle.com/datasets/prudhvignv/road-damage-classification-and-assessment/data).
+2.  Place the raw data in the `data_set/raw/` directory, organized by category (`good`, `poor`, `satisfactory`, `very_poor`).
+
+### 2. Data Preprocessing
+
+This step resizes, augments (brightness, contrast, rotation, flip), and organizes the images.
+
+To run the preprocessing script:
+
+```bash
+python code/prepare_data.py
+```
+
+Raw images from `data_set/raw/` will be processed and saved in `data_set/splitted/`.
+
+### 3. Model Training
+
+This script loads the preprocessed data, builds the CNN model, and trains it.
+
+To start the training:
+
+```bash
+python code/training.py
+```
+
+- The best model is saved as `models/best_road_model.keras`.
+- Training logs are saved in `logs/training.txt`.
+- Training history is saved in `results/training_history.csv`.
+
+### 4. Model Evaluation
+
+This script evaluates the model's performance on the test set.
+
+To evaluate the model:
+
+```bash
+python code/evaluation.py
+```
+
+- The evaluation report is saved in `logs/evaluation.txt`.
+- Visualizations (accuracy/loss curves, confusion matrix) are saved in the `results/` directory.
 
 ## Results
 
-The following results and visualizations are generated during the training and evaluation process and can be found in the `results/` directory:
+The `results/` directory contains visualizations generated during training and evaluation:
 
 - `accuracy_curve.png`: Model accuracy over epochs.
+  ![accuracy_curve](./results/accuracy_curve.png)
+
 - `loss_curve.png`: Model loss over epochs.
+  ![loss curve](./results/accuracy_curve.png)
+
 - `confusion_matrix_visual.png`: Confusion matrix of the model's predictions.
-- `classification_report.png`: Classification report showing precision, recall, and F1-score.
+  ![confusion_matrix_visual curve](./results/accuracy_curve.png)
+
+- `classification_report.png`: Classification report with precision, recall, and F1-score.
+  ![classification_report](./results/accuracy_curve.png)
+
 - `sample_predictions.png`: Example predictions on test images.
-- `training_history.csv`: CSV file with the training history.
+  ![sample prediction](./results/sample_predictions.png)
+
+## Report
+
+The report can be found in `report/report.pdf`.
