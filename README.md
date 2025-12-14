@@ -134,13 +134,13 @@ The `results/` directory contains visualizations generated during training and e
   ![accuracy_curve](./results/accuracy_curve.png)
 
 - `loss_curve.png`: Model loss over epochs.
-  ![loss curve](./results/accuracy_curve.png)
+  ![loss curve](./results/loss_curve.png)
 
 - `confusion_matrix_visual.png`: Confusion matrix of the model's predictions.
-  ![confusion_matrix_visual curve](./results/accuracy_curve.png)
+  ![confusion_matrix_visual curve](./results/confusion_matrix_visual.png)
 
 - `classification_report.png`: Classification report with precision, recall, and F1-score.
-  ![classification_report](./results/accuracy_curve.png)
+  ![classification_report](./results/classification_report.png)
 
 - `sample_predictions.png`: Example predictions on test images.
   ![sample prediction](./results/sample_predictions.png)
